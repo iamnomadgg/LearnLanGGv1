@@ -5,6 +5,8 @@ const express = require('express')
 const cors = require('cors');
 const helmet = require('helmet')
 const mongoose = require('mongoose')
+const Lesson = require('./models/Lesson');
+
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/learn-langg'
 mongoose.connect(dbUrl, {})
@@ -22,11 +24,25 @@ app.get('/', (req, res) => {
     res.send('LearnLangg App');
 });
 
-app.get('/api/lessons', (req, res) => {
-    res.json([
-        { id: 1, title: 'Lesson 1' },
-        { id: 2, title: 'Lesson 2' }
-    ]);
+app.get('/api/lessons', async (req, res) => {
+    try {
+        const lessons = await Lesson.find();
+        res.status(200).json(lessons);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch lessons', details: err.message });
+    }
+});
+
+
+app.post('/api/lessons', async (req, res) => {
+    try {
+        const { title, content, audioUrl } = req.body;
+        const newLesson = new Lesson({ title, content, audioUrl });
+        await newLesson.save();
+        res.status(201).json({ message: 'Lesson saved!', lesson: newLesson });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to save lesson', details: err.message });
+    }
 });
 
 app.listen(PORT, () => {
