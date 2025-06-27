@@ -8,6 +8,8 @@ import {
 } from '@mui/material';
 import api from '../api';
 
+const maxTitleLength = parseInt(import.meta.env.VITE_MAX_LESSON_TITLE_LENGTH || 60);
+
 const LessonForm = ({ onLessonCreated }) => {
     const [formData, setFormData] = useState({
         title: '',
@@ -47,6 +49,8 @@ const LessonForm = ({ onLessonCreated }) => {
                     fullWidth
                     required
                     margin="normal"
+                    slotProps={{ htmlInput: { maxLength: maxTitleLength } }}
+                    helperText={`${formData.title.length}/${maxTitleLength} characters`}
                 />
                 <TextField
                     label="Content"
