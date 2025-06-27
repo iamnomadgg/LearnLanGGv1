@@ -1,3 +1,4 @@
 server/node_modules/
 server/.env
-client/learn-langg=client/node_modules/
+client/learn-langg-client/node_modules/
+client/learn-langg-client/.env
