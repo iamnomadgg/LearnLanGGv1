@@ -1,12 +1,13 @@
-function App() {
+import React from 'react';
+import LessonList from './components/LessonList';
 
+function App() {
   return (
-    <>
-      <div>
-        aaa
-      </div>
-    </>
-  )
+    <div className="App">
+      <h1>LearnLangg</h1>
+      <LessonList />
+    </div>
+  );
 }
 
-export default App
+export default App;
