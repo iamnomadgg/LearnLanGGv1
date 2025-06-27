@@ -7,13 +7,9 @@ const helmet = require('helmet')
 const mongoose = require('mongoose')
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/learn-langg'
-mongoose.connect(dbUrl)
-
-const dbCon = mongoose.connection
-dbCon.on('error', console.error.bind(console, 'connection error: '))
-dbCon.once('open', () => {
-    console.log('Database connected')
-})
+mongoose.connect(dbUrl, {})
+    .then(() => console.log('DB Connected'))
+    .catch(err => console.error('DB connection error:', err));
 
 const app = express()
 const PORT = process.env.PORT || 5000
