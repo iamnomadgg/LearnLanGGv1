@@ -37,11 +37,6 @@ const LessonList = () => {
                             <CardActionArea component={Link} to={`/lessons/${lesson._id}`}>
                                 <CardContent>
                                     <Typography variant="h6">{lesson.title}</Typography>
-                                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                                        {lesson.content.length > 100
-                                            ? `${lesson.content.slice(0, 100)}...`
-                                            : lesson.content}
-                                    </Typography>
                                 </CardContent>
                             </CardActionArea>
                         </Card>
