@@ -8,8 +8,14 @@ import {
     Box,
     Button,
     Stack,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import api from '../api';
 
 const LessonDetail = () => {
@@ -18,6 +24,7 @@ const LessonDetail = () => {
     const [lesson, setLesson] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     useEffect(() => {
         const fetchLesson = async () => {
@@ -38,15 +45,40 @@ const LessonDetail = () => {
     if (error) return <Alert severity="error">{error}</Alert>;
     if (!lesson) return <Alert severity="warning">Lesson not found.</Alert>;
 
+    const handleDelete = async () => {
+        try {
+            await api.delete(`/lessons/${id}`);
+            navigate('/');
+        } catch (err) {
+            alert('Failed to delete the lesson.');
+        }
+    };
+
+
     return (
         <Paper elevation={3} sx={{ p: 3 }}>
-            <Stack direction="row" spacing={2} alignItems="center" mb={2}>
+            <Stack direction="row" spacing={2} mb={3}>
                 <Button
                     variant="outlined"
                     startIcon={<ArrowBackIcon />}
                     onClick={() => navigate('/')}
                 >
                     Back to Lessons
+                </Button>
+                <Button
+                    variant="contained"
+                    startIcon={<EditIcon />}
+                    onClick={() => navigate(`/lessons/${id}/edit`)}
+                >
+                    Edit
+                </Button>
+                <Button
+                    variant="outlined"
+                    color="error"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => setDeleteDialogOpen(true)}
+                >
+                    Delete
                 </Button>
             </Stack>
             <Typography variant="h4" gutterBottom>
@@ -63,6 +95,17 @@ const LessonDetail = () => {
                     </audio>
                 </Box>
             )}
+
+            <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+                <DialogTitle>Confirm Deletion</DialogTitle>
+                <DialogContent>
+                    Are you sure you want to delete this lesson? This action cannot be undone.
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+                    <Button onClick={handleDelete} color="error">Delete</Button>
+                </DialogActions>
+            </Dialog>
         </Paper>
     );
 };
