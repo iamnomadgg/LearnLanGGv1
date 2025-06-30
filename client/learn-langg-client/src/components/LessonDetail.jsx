@@ -17,6 +17,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import api from '../api';
+import ClickableWord from './ClickableWord';
 
 const LessonDetail = () => {
     const { id } = useParams();
@@ -25,6 +26,7 @@ const LessonDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
     useEffect(() => {
         const fetchLesson = async () => {
@@ -54,6 +56,11 @@ const LessonDetail = () => {
         }
     };
 
+    const handleWordClick = (word, index) => {
+        setSelectedIndex(index);
+        console.log('Clicked word:', word, 'at index:', index);
+        // later attach a popover/modal here
+    };
 
     return (
         <Paper elevation={3} sx={{ p: 3 }}>
@@ -84,8 +91,16 @@ const LessonDetail = () => {
             <Typography variant="h4" gutterBottom>
                 {lesson.title}
             </Typography>
-            <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
-                {lesson.content}
+            <Typography variant="body1" sx={{ mt: 2 }}>
+                {lesson.content.split(/\s+/).map((word, index) => (
+                    <React.Fragment key={index}>
+                        <ClickableWord
+                            word={word}
+                            onClick={() => handleWordClick(word, index)}
+                            selected={index === selectedIndex}
+                        />{' '}
+                    </React.Fragment>
+                ))}
             </Typography>
 
             {lesson.audioUrl && (
