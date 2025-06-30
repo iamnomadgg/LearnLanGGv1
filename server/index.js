@@ -43,7 +43,6 @@ app.get('/api/lessons', async (req, res) => {
     }
 });
 
-
 app.post('/api/lessons', async (req, res) => {
     try {
         const { title, content, audioUrl } = req.body;
@@ -52,6 +51,44 @@ app.post('/api/lessons', async (req, res) => {
         res.status(201).json({ message: 'Lesson saved!', lesson: newLesson });
     } catch (err) {
         res.status(500).json({ error: 'Failed to save lesson', details: err.message });
+    }
+});
+
+app.put('/api/lessons/:id', async (req, res) => {
+    try {
+        const updatedLesson = await Lesson.findByIdAndUpdate(
+            req.params.id,
+            {
+                title: req.body.title,
+                content: req.body.content,
+                audioUrl: req.body.audioUrl,
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedLesson) {
+            return res.status(404).json({ message: 'Lesson not found' });
+        }
+
+        res.json(updatedLesson);
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ message: 'Error updating lesson' });
+    }
+});
+
+app.delete('/api/lessons/:id', async (req, res) => {
+    try {
+        const deletedLesson = await Lesson.findByIdAndDelete(req.params.id);
+
+        if (!deletedLesson) {
+            return res.status(404).json({ message: 'Lesson not found' });
+        }
+
+        res.json({ message: 'Lesson deleted successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ message: 'Error deleting lesson' });
     }
 });
 
