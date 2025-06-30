@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     Typography,
@@ -18,6 +18,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import api from '../api';
 import ClickableWord from './ClickableWord';
+import WordStatusPopup from './WordStatusPopup';
 
 const LessonDetail = () => {
     const { id } = useParams();
@@ -27,6 +28,9 @@ const LessonDetail = () => {
     const [error, setError] = useState('');
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const [selectedWordStatus, setSelectedWordStatus] = useState(null);
+    const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+    const containerRef = useRef();
 
     useEffect(() => {
         const fetchLesson = async () => {
@@ -58,12 +62,29 @@ const LessonDetail = () => {
 
     const handleWordClick = (word, index) => {
         setSelectedIndex(index);
-        console.log('Clicked word:', word, 'at index:', index);
-        // later attach a popover/modal here
+        // TODO: Fetch current status from DB or local state; for demo: null = new
+        setSelectedWordStatus(null);
+        // Position popup under clicked word
+        const rect = event.target.getBoundingClientRect();
+        const containerRect = containerRef.current.getBoundingClientRect();
+        setPopupPosition({
+            top: rect.bottom - containerRect.top + window.scrollY,
+            left: rect.left - containerRect.left + window.scrollX,
+        });
+    };
+
+    const handleChangeStatus = (newStatus) => {
+        setSelectedWordStatus(newStatus);
+        // TODO: Save to DB or update local vocab tracking state
+    };
+
+    const handleClosePopup = () => {
+        setSelectedIndex(null);
+        setSelectedWordStatus(null);
     };
 
     return (
-        <Paper elevation={3} sx={{ p: 3 }}>
+        <Paper elevation={3} sx={{ p: 3, position: 'relative' }}>
             <Stack direction="row" spacing={2} mb={3}>
                 <Button
                     variant="outlined"
@@ -102,6 +123,25 @@ const LessonDetail = () => {
                     </React.Fragment>
                 ))}
             </Typography>
+
+            {selectedIndex !== null && (
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: popupPosition.top,
+                        left: popupPosition.left,
+                        zIndex: 1000,
+                        // optionally add some maxWidth or width if needed
+                    }}
+                >
+                    <WordStatusPopup
+                        word={lesson.content.split(/\s+/)[selectedIndex]}
+                        status={selectedWordStatus}
+                        onChangeStatus={handleChangeStatus}
+                        onClose={handleClosePopup}
+                    />
+                </Box>
+            )}
 
             {lesson.audioUrl && (
                 <Box sx={{ mt: 3 }}>
