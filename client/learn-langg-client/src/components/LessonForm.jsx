@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     TextField,
     Button,
     Box,
     Typography,
-    Paper
+    Paper,
+    Alert
 } from '@mui/material';
 import api from '../api';
 
 const maxTitleLength = parseInt(import.meta.env.VITE_MAX_LESSON_TITLE_LENGTH || 60);
 
-const LessonForm = ({ onLessonCreated }) => {
+const LessonForm = () => {
     const [formData, setFormData] = useState({
         title: '',
         content: '',
         audioUrl: '',
     });
+
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData((prev) => ({
@@ -26,12 +31,12 @@ const LessonForm = ({ onLessonCreated }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
         try {
-            const response = await api.post('/lessons', formData);
-            onLessonCreated(response.data.lesson);
-            setFormData({ title: '', content: '', audioUrl: '' });
+            await api.post('/lessons', formData);
+            navigate('/');
         } catch (error) {
-            console.error('Error creating lesson:', error);
+            setError(`'Error creating lesson: ${error}`);
         }
     };
 
@@ -40,6 +45,11 @@ const LessonForm = ({ onLessonCreated }) => {
             <Typography variant="h5" gutterBottom>
                 Add a New Lesson
             </Typography>
+            {error && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                    {error}
+                </Alert>
+            )}
             <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
                 <TextField
                     label="Title"
