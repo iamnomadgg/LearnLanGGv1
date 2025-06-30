@@ -1,0 +1,15 @@
+.clickable-word {
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    display: inline-block;
+    border: 1px solid transparent;
+}
+
+.clickable-word:hover {
+    border: 1px solid #cccccc;
+}
+
+.clickable-word.selected {
+    border: 1px solid #666666;
+}
