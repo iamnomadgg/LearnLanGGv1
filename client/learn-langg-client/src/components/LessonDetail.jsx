@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
     Typography,
     Paper,
     CircularProgress,
     Alert,
-    Box
+    Box,
+    Button,
+    Stack,
 } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import api from '../api';
 
 const LessonDetail = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [lesson, setLesson] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -36,6 +40,18 @@ const LessonDetail = () => {
 
     return (
         <Paper elevation={3} sx={{ p: 3 }}>
+            {/* <Stack direction="row" spacing={2} alignItems="center" mb={2}>
+                <Button
+                    variant="outlined"
+                    startIcon={<ArrowBackIcon />}
+                    onClick={() => navigate('/')}
+                >
+                    Back to Lessons
+                </Button>
+            </Stack> */}
+            <Button variant="outlined" onClick={() => navigate('/')} sx={{ mb: 2 }}>
+                ← Back to All Lessons
+            </Button>
             <Typography variant="h4" gutterBottom>
                 {lesson.title}
             </Typography>
