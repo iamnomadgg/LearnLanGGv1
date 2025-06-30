@@ -40,7 +40,7 @@ const LessonDetail = () => {
 
     return (
         <Paper elevation={3} sx={{ p: 3 }}>
-            {/* <Stack direction="row" spacing={2} alignItems="center" mb={2}>
+            <Stack direction="row" spacing={2} alignItems="center" mb={2}>
                 <Button
                     variant="outlined"
                     startIcon={<ArrowBackIcon />}
@@ -48,10 +48,7 @@ const LessonDetail = () => {
                 >
                     Back to Lessons
                 </Button>
-            </Stack> */}
-            <Button variant="outlined" onClick={() => navigate('/')} sx={{ mb: 2 }}>
-                ← Back to All Lessons
-            </Button>
+            </Stack>
             <Typography variant="h4" gutterBottom>
                 {lesson.title}
             </Typography>
