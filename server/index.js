@@ -24,6 +24,16 @@ app.get('/', (req, res) => {
     res.send('LearnLangg App');
 });
 
+app.get('/api/lessons/:id', async (req, res) => {
+    try {
+        const lesson = await Lesson.findById(req.params.id);
+        if (!lesson) return res.status(404).json({ error: 'Lesson not found' });
+        res.json(lesson);
+    } catch (err) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 app.get('/api/lessons', async (req, res) => {
     try {
         const lessons = await Lesson.find();

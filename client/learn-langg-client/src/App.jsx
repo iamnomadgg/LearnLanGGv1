@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import LessonList from './components/LessonList';
 import LessonForm from './components/LessonForm';
+import LessonDetail from './components/LessonDetail';
 import { Button, Container, Typography } from '@mui/material';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LessonList />} />
           <Route path="/add" element={<LessonForm />} />
+          <Route path="/lessons/:id" element={<LessonDetail />} />
         </Routes>
       </Container>
     </Router>
