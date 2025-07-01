@@ -30,7 +30,7 @@ const LessonDetail = () => {
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [selectedWordStatus, setSelectedWordStatus] = useState(null);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
-    const containerRef = useRef();
+    const containerRef = useRef(null);
 
     useEffect(() => {
         const fetchLesson = async () => {
@@ -60,18 +60,19 @@ const LessonDetail = () => {
         }
     };
 
-    const handleWordClick = (word, index) => {
+    const handleWordClick = (event, word, index) => {
         setSelectedIndex(index);
-        // TODO: Fetch current status from DB or local state; for demo: null = new
-        setSelectedWordStatus(null);
-        // Position popup under clicked word
+        setSelectedWordStatus(null); // fetch status from DB
+
         const rect = event.target.getBoundingClientRect();
         const containerRect = containerRef.current.getBoundingClientRect();
+
         setPopupPosition({
             top: rect.bottom - containerRect.top + window.scrollY,
             left: rect.left - containerRect.left + window.scrollX,
         });
     };
+
 
     const handleChangeStatus = (newStatus) => {
         setSelectedWordStatus(newStatus);
@@ -84,7 +85,7 @@ const LessonDetail = () => {
     };
 
     return (
-        <Paper elevation={3} sx={{ p: 3, position: 'relative' }}>
+        <Paper ref={containerRef} elevation={3} sx={{ p: 3, position: 'relative' }}>
             <Stack direction="row" spacing={2} mb={3}>
                 <Button
                     variant="outlined"
@@ -117,7 +118,7 @@ const LessonDetail = () => {
                     <React.Fragment key={index}>
                         <ClickableWord
                             word={word}
-                            onClick={() => handleWordClick(word, index)}
+                            onClick={(e) => handleWordClick(e, word, index)}
                             selected={index === selectedIndex}
                         />{' '}
                     </React.Fragment>
