@@ -57,7 +57,7 @@ const WordStatusPopup = ({
                 size="small"
                 fullWidth
                 margin="dense"
-                InputProps={{ readOnly: true }}
+            // slotProps={{ input: { readOnly: true } }}
             />
 
             <TextField
@@ -69,7 +69,7 @@ const WordStatusPopup = ({
                 margin="dense"
                 multiline
                 minRows={2}
-                InputProps={{ readOnly: true }}
+            // slotProps={{ input: { readOnly: false } }}
             />
 
             <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
