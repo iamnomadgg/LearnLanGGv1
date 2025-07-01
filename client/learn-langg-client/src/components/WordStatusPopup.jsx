@@ -1,14 +1,18 @@
 import React from 'react';
-import { Box, Typography, Button, Stack, Paper } from '@mui/material';
-
-const STATUS_OPTIONS = [
-    'Known',
-    'Discarded',
-    'Unknown Level 1',
-    'Unknown Level 2',
-    'Unknown Level 3',
-    'Unknown Level 4',
-];
+import {
+    Box,
+    Typography,
+    IconButton,
+    Paper,
+    Tooltip,
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import LooksOneIcon from '@mui/icons-material/LooksOne';
+import LooksTwoIcon from '@mui/icons-material/LooksTwo';
+import Looks3Icon from '@mui/icons-material/Looks3';
+import Looks4Icon from '@mui/icons-material/Looks4';
+import CloseIcon from '@mui/icons-material/Close';
 
 const WordStatusPopup = ({ word, status, onChangeStatus, onClose }) => {
     return (
@@ -21,30 +25,80 @@ const WordStatusPopup = ({ word, status, onChangeStatus, onClose }) => {
                 p: 2,
                 width: 250,
                 zIndex: 1000,
+                borderRadius: 2,
             }}
         >
-            <Typography variant="subtitle1" gutterBottom>
-                <strong>{word}</strong>
+            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                {word}
             </Typography>
-            <Typography variant="body2" gutterBottom>
-                <strong>{status || 'New'}</strong>
+            <Typography variant="body2" color="text.secondary" gutterBottom>
+                {status || 'New'}
             </Typography>
-            <Stack spacing={1}>
-                {STATUS_OPTIONS.map((option) => (
-                    <Button
-                        key={option}
-                        variant={option === status ? 'contained' : 'outlined'}
+            <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
+                <Tooltip title="Discarded">
+                    <IconButton
+                        color={status === 'Discarded' ? 'error' : 'default'}
+                        onClick={() => onChangeStatus('Discarded')}
                         size="small"
-                        onClick={() => onChangeStatus(option)}
                     >
-                        {option}
-                    </Button>
-                ))}
-            </Stack>
+                        <DeleteIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Unknown Level 1">
+                    <IconButton
+                        color={status === 'Unknown Level 1' ? 'primary' : 'default'}
+                        onClick={() => onChangeStatus('Unknown Level 1')}
+                        size="small"
+                    >
+                        <LooksOneIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Unknown Level 2">
+                    <IconButton
+                        color={status === 'Unknown Level 2' ? 'primary' : 'default'}
+                        onClick={() => onChangeStatus('Unknown Level 2')}
+                        size="small"
+                    >
+                        <LooksTwoIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Unknown Level 3">
+                    <IconButton
+                        color={status === 'Unknown Level 3' ? 'primary' : 'default'}
+                        onClick={() => onChangeStatus('Unknown Level 3')}
+                        size="small"
+                    >
+                        <Looks3Icon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Unknown Level 4">
+                    <IconButton
+                        color={status === 'Unknown Level 4' ? 'primary' : 'default'}
+                        onClick={() => onChangeStatus('Unknown Level 4')}
+                        size="small"
+                    >
+                        <Looks4Icon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Known">
+                    <IconButton
+                        color={status === 'Known' ? 'success' : 'default'}
+                        onClick={() => onChangeStatus('Known')}
+                        size="small"
+                    >
+                        <CheckCircleIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+            </Box>
             <Box mt={1} textAlign="right">
-                <Button size="small" onClick={onClose}>
-                    Close
-                </Button>
+                <IconButton onClick={onClose} size="small">
+                    <CloseIcon fontSize="small" />
+                </IconButton>
             </Box>
         </Paper>
     );
