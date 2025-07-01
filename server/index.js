@@ -6,6 +6,7 @@ const cors = require('cors');
 const helmet = require('helmet')
 const mongoose = require('mongoose')
 const Lesson = require('./models/Lesson');
+const Vocabulary = require('./models/Vocabulary');
 
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/learn-langg'
@@ -89,6 +90,20 @@ app.delete('/api/lessons/:id', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(400).json({ message: 'Error deleting lesson' });
+    }
+});
+
+app.get('/api/vocabulary/:word', async (req, res) => {
+    const word = req.params.word.toLowerCase();
+    try {
+        const entry = await Vocabulary.findOne({ word });
+        if (!entry) {
+            return res.status(404).json({ message: 'Word not found' });
+        }
+        res.json(entry);
+    } catch (err) {
+        console.error('Error fetching vocabulary:', err);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
