@@ -31,6 +31,23 @@ const LessonDetail = () => {
     const [selectedWordStatus, setSelectedWordStatus] = useState(null);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
     const containerRef = useRef(null);
+    const popupRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                popupRef.current &&
+                !popupRef.current.contains(event.target)
+            ) {
+                setSelectedIndex(null); // Close the popup
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => {
         const fetchLesson = async () => {
@@ -127,6 +144,7 @@ const LessonDetail = () => {
 
             {selectedIndex !== null && (
                 <Box
+                    ref={popupRef}
                     sx={{
                         position: 'absolute',
                         top: popupPosition.top,
