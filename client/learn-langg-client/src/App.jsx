@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import LessonList from './components/LessonList';
 import LessonForm from './components/LessonForm';
 import Reader from './components/Reader';
-import EditLesson from './components/EditLesson';
+import Editor from './components/Editor';
 import { Button, Container, Typography } from '@mui/material';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LessonList />} />
           <Route path="/add" element={<LessonForm />} />
-          <Route path="/lessons/:id/edit" element={<EditLesson />} />
+          <Route path="/editor/:lessonId" element={<Editor />} />
           <Route path="/reader/:lessonId" element={<Reader />} />
         </Routes>
       </Container>

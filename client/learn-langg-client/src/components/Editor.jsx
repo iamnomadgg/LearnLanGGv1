@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-    Typography,
     TextField,
     Button,
     Paper,
@@ -18,7 +17,7 @@ import api from '../api';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const EditLesson = () => {
-    const { id } = useParams();
+    const { lessonId } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
@@ -29,12 +28,12 @@ const EditLesson = () => {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-    const maxTitleLength = import.meta.env.VITE_TITLE_MAX_LENGTH || 60;
+    const maxTitleLength = import.meta.env.VITE_MAX_TITLE_LENGTH;
 
     useEffect(() => {
         const fetchLesson = async () => {
             try {
-                const res = await api.get(`/lessons/${id}`);
+                const res = await api.get(`/lessons/${lessonId}`);
                 setFormData(res.data);
             } catch (err) {
                 setError('Failed to load lesson');
@@ -43,7 +42,7 @@ const EditLesson = () => {
             }
         };
         fetchLesson();
-    }, [id]);
+    }, [lessonId]);
 
     const handleChange = (e) => {
         setFormData((prev) => ({
@@ -56,8 +55,8 @@ const EditLesson = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            await api.put(`/lessons/${id}`, formData);
-            navigate(`/lessons/${id}`);
+            await api.put(`/lessons/${lessonId}`, formData);
+            navigate(`/reader/${lessonId}`);
         } catch (err) {
             setError('Failed to update lesson');
         } finally {
@@ -67,7 +66,7 @@ const EditLesson = () => {
 
     const handleDelete = async () => {
         try {
-            await api.delete(`/lessons/${id}`);
+            await api.delete(`/lessons/${lessonId}`);
             navigate('/');
         } catch (err) {
             alert('Failed to delete lesson');
@@ -79,9 +78,6 @@ const EditLesson = () => {
 
     return (
         <Paper elevation={3} sx={{ p: 3 }}>
-            <Typography variant="h5" gutterBottom>
-                Edit Lesson
-            </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
                 <TextField
                     label="Title"
