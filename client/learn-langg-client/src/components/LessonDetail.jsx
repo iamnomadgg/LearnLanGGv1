@@ -28,7 +28,6 @@ const LessonDetail = () => {
     const [error, setError] = useState('');
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
-    const [selectedWord, setSelectedWord] = useState(null);
     const [selectedWordData, setSelectedWordData] = useState(null);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
     const containerRef = useRef(null);
@@ -80,7 +79,6 @@ const LessonDetail = () => {
 
     const handleWordClick = async (event, word, index) => {
         setSelectedIndex(index);
-        setSelectedWord(word);
 
         // Position popup
         const rect = event.target.getBoundingClientRect();
