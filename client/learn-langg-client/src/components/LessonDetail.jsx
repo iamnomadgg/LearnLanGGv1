@@ -28,6 +28,8 @@ const LessonDetail = () => {
     const [error, setError] = useState('');
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const [selectedWord, setSelectedWord] = useState(null);
+    const [selectedWordData, setSelectedWordData] = useState(null);
     const [selectedWordStatus, setSelectedWordStatus] = useState(null);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
     const containerRef = useRef(null);
@@ -77,19 +79,32 @@ const LessonDetail = () => {
         }
     };
 
-    const handleWordClick = (event, word, index) => {
+    const handleWordClick = async (event, word, index) => {
         setSelectedIndex(index);
-        setSelectedWordStatus(null); // fetch status from DB
+        setSelectedWord(word);
 
+        // Position popup
         const rect = event.target.getBoundingClientRect();
         const containerRect = containerRef.current.getBoundingClientRect();
-
         setPopupPosition({
             top: rect.bottom - containerRect.top + window.scrollY,
             left: rect.left - containerRect.left + window.scrollX,
         });
-    };
 
+        try {
+            const res = await api.get(`/vocabulary/${word.toLowerCase()}`);
+            setSelectedWordData(res.data);
+            setSelectedWordStatus(res.data.status)
+        } catch (err) {
+            setSelectedWordData(null);
+            setSelectedWordStatus(null)
+            if (err.response?.status === 404) {
+                console.error('Word Not Found', err);
+            } else {
+                console.error('Failed to fetch vocabulary:', err);
+            }
+        }
+    };
 
     const handleChangeStatus = (newStatus) => {
         setSelectedWordStatus(newStatus);
@@ -155,7 +170,7 @@ const LessonDetail = () => {
                 >
                     <WordStatusPopup
                         word={lesson.content.split(/\s+/)[selectedIndex]}
-                        status={selectedWordStatus}
+                        data={selectedWordData}
                         onChangeStatus={handleChangeStatus}
                         onClose={handleClosePopup}
                     />
