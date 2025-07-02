@@ -13,7 +13,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import api from '../api';
 import Word from './Word';
-import WordStatusPopup from './WordStatusPopup';
+import WordPopup from './WordPopup';
 
 const Reader = () => {
     const { lessonId } = useParams();
@@ -140,7 +140,7 @@ const Reader = () => {
                         // optionally add some maxWidth or width if needed
                     }}
                 >
-                    <WordStatusPopup
+                    <WordPopup
                         word={lesson.content.split(/\s+/)[selectedIndex]}
                         data={selectedWordData}
                         onChangeStatus={handleChangeStatus}

@@ -24,7 +24,7 @@ const STATUS_OPTIONS = [
     { value: 'known', label: 'Known', icon: <CheckIcon fontSize="small" /> }
 ];
 
-const WordStatusPopup = ({ word, data, onChangeStatus, onClose }) => {
+const WordPopup = ({ word, data, onChangeStatus, onClose }) => {
     const currentStatus = data?.status || 'New';
 
     return (
@@ -89,4 +89,4 @@ const WordStatusPopup = ({ word, data, onChangeStatus, onClose }) => {
     );
 };
 
-export default WordStatusPopup;
+export default WordPopup;
