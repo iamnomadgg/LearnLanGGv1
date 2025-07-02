@@ -15,7 +15,7 @@ const Library = () => {
     useEffect(() => {
         const fetchLessons = async () => {
             try {
-                const response = await api.get('/lessons');
+                const response = await api.get('/lesson/all');
                 setLessons(response.data);
             } catch (error) {
                 console.error('Failed to fetch lessons:', error);

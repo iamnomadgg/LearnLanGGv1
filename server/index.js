@@ -25,7 +25,16 @@ app.get('/', (req, res) => {
     res.send(process.env.APP_NAME);
 });
 
-app.get('/api/lessons/:id', async (req, res) => {
+app.get('/api/lesson/all', async (req, res) => {
+    try {
+        const lessons = await Lesson.find();
+        res.status(200).json(lessons);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch lessons', details: err.message });
+    }
+});
+
+app.get('/api/lesson/:id', async (req, res) => {
     try {
         const lesson = await Lesson.findById(req.params.id);
         if (!lesson) return res.status(404).json({ error: 'Lesson not found' });
@@ -35,16 +44,7 @@ app.get('/api/lessons/:id', async (req, res) => {
     }
 });
 
-app.get('/api/lessons', async (req, res) => {
-    try {
-        const lessons = await Lesson.find();
-        res.status(200).json(lessons);
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch lessons', details: err.message });
-    }
-});
-
-app.post('/api/lessons', async (req, res) => {
+app.post('/api/lesson', async (req, res) => {
     try {
         const { title, content, audioUrl } = req.body;
         const newLesson = new Lesson({ title, content, audioUrl });
@@ -55,7 +55,7 @@ app.post('/api/lessons', async (req, res) => {
     }
 });
 
-app.put('/api/lessons/:id', async (req, res) => {
+app.put('/api/lesson/:id', async (req, res) => {
     try {
         const updatedLesson = await Lesson.findByIdAndUpdate(
             req.params.id,
@@ -78,7 +78,7 @@ app.put('/api/lessons/:id', async (req, res) => {
     }
 });
 
-app.delete('/api/lessons/:id', async (req, res) => {
+app.delete('/api/lesson/:id', async (req, res) => {
     try {
         const deletedLesson = await Lesson.findByIdAndDelete(req.params.id);
 
@@ -93,7 +93,7 @@ app.delete('/api/lessons/:id', async (req, res) => {
     }
 });
 
-app.get('/api/vocabulary/:word', async (req, res) => {
+app.get('/api/vocab/:word', async (req, res) => {
     const word = req.params.word.toLowerCase();
     try {
         const entry = await Vocabulary.findOne({ word });

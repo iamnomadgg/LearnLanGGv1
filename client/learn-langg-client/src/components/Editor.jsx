@@ -33,7 +33,7 @@ const EditLesson = () => {
     useEffect(() => {
         const fetchLesson = async () => {
             try {
-                const res = await api.get(`/lessons/${lessonId}`);
+                const res = await api.get(`/lesson/${lessonId}`);
                 setFormData(res.data);
             } catch (err) {
                 setError('Failed to load lesson');
@@ -55,7 +55,7 @@ const EditLesson = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            await api.put(`/lessons/${lessonId}`, formData);
+            await api.put(`/lesson/${lessonId}`, formData);
             navigate(`/read/${lessonId}`);
         } catch (err) {
             setError('Failed to update lesson');
@@ -66,7 +66,7 @@ const EditLesson = () => {
 
     const handleDelete = async () => {
         try {
-            await api.delete(`/lessons/${lessonId}`);
+            await api.delete(`/lesson/${lessonId}`);
             navigate('/lib');
         } catch (err) {
             alert('Failed to delete lesson');

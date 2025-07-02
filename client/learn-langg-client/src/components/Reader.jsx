@@ -46,7 +46,7 @@ const Reader = () => {
     useEffect(() => {
         const fetchLesson = async () => {
             try {
-                const response = await api.get(`/lessons/${lessonId}`);
+                const response = await api.get(`/lesson/${lessonId}`);
                 setLesson(response.data);
             } catch (err) {
                 setError('Failed to load lesson.');
@@ -74,7 +74,7 @@ const Reader = () => {
         });
 
         try {
-            const res = await api.get(`/vocabulary/${word.toLowerCase()}`);
+            const res = await api.get(`/vocab/${word.toLowerCase()}`);
             setSelectedWordData(res.data);
         } catch (err) {
             setSelectedWordData(null);
