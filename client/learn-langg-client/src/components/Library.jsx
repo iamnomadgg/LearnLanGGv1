@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../api';
 
-const LessonList = () => {
+const Library = () => {
     const [lessons, setLessons] = useState([]);
 
     useEffect(() => {
@@ -47,4 +47,4 @@ const LessonList = () => {
     );
 };
 
-export default LessonList;
+export default Library;

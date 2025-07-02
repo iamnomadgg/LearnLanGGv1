@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import LessonList from './components/LessonList';
+import Library from './components/Library';
 import LessonForm from './components/LessonForm';
 import Reader from './components/Reader';
 import Editor from './components/Editor';
@@ -19,7 +19,8 @@ function App() {
         </Button>
 
         <Routes>
-          <Route path="/" element={<LessonList />} />
+          <Route path="/" element={<Library />} />
+          <Route path="/library" element={<Library />} />
           <Route path="/add" element={<LessonForm />} />
           <Route path="/editor/:lessonId" element={<Editor />} />
           <Route path="/reader/:lessonId" element={<Reader />} />
