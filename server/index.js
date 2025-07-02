@@ -5,6 +5,7 @@ const express = require('express')
 const cors = require('cors');
 const helmet = require('helmet')
 const mongoose = require('mongoose')
+const ServerError = require('./utils/ServerError')
 const Lesson = require('./models/Lesson');
 const Vocabulary = require('./models/Vocabulary');
 
@@ -106,6 +107,16 @@ app.get('/api/vocab/:word', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+app.all(/(.*)/, (req, res, next) => {
+    next(new ServerError('Page Not Found', 404))
+})
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err
+    if (!err.message) err.message = 'Something went wrong'
+    return res.status(statusCode).json({ message: err.message })
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
