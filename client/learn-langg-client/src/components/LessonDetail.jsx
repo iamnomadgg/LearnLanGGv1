@@ -8,14 +8,9 @@ import {
     Box,
     Button,
     Stack,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import api from '../api';
 import ClickableWord from './ClickableWord';
 import WordStatusPopup from './WordStatusPopup';
@@ -26,7 +21,6 @@ const LessonDetail = () => {
     const [lesson, setLesson] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [selectedWordData, setSelectedWordData] = useState(null);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
@@ -67,15 +61,6 @@ const LessonDetail = () => {
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
     if (!lesson) return <Alert severity="warning">Lesson not found.</Alert>;
-
-    const handleDelete = async () => {
-        try {
-            await api.delete(`/lessons/${id}`);
-            navigate('/');
-        } catch (err) {
-            alert('Failed to delete the lesson.');
-        }
-    };
 
     const handleWordClick = async (event, word, index) => {
         setSelectedIndex(index);
@@ -128,14 +113,6 @@ const LessonDetail = () => {
                 >
                     Edit
                 </Button>
-                <Button
-                    variant="outlined"
-                    color="error"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => setDeleteDialogOpen(true)}
-                >
-                    Delete
-                </Button>
             </Stack>
             <Typography variant="h4" gutterBottom>
                 {lesson.title}
@@ -179,17 +156,6 @@ const LessonDetail = () => {
                     </audio>
                 </Box>
             )}
-
-            <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-                <DialogTitle>Confirm Deletion</DialogTitle>
-                <DialogContent>
-                    Are you sure you want to delete this lesson? This action cannot be undone.
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
-                    <Button onClick={handleDelete} color="error">Delete</Button>
-                </DialogActions>
-            </Dialog>
         </Paper>
     );
 };
