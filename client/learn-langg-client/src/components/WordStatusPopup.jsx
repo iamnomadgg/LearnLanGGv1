@@ -17,12 +17,12 @@ import Looks4Icon from '@mui/icons-material/Looks4';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 const STATUS_OPTIONS = [
-    { label: 'Discarded', value: 'Discarded', icon: <DeleteIcon fontSize="small" /> },
-    { label: 'Level 1', value: 'Unknown Level 1', icon: <LooksOneIcon fontSize="small" /> },
-    { label: 'Level 2', value: 'Unknown Level 2', icon: <LooksTwoIcon fontSize="small" /> },
-    { label: 'Level 3', value: 'Unknown Level 3', icon: <Looks3Icon fontSize="small" /> },
-    { label: 'Level 4', value: 'Unknown Level 4', icon: <Looks4Icon fontSize="small" /> },
-    { label: 'Known', value: 'Known', icon: <CheckIcon fontSize="small" /> }
+    { value: 'discarded', label: 'Discarded', icon: <DeleteIcon fontSize="small" /> },
+    { value: 'level1', label: 'Unknown Level 1', icon: <LooksOneIcon fontSize="small" /> },
+    { value: 'level2', label: 'Unknown Level 2', icon: <LooksTwoIcon fontSize="small" /> },
+    { value: 'level3', label: 'Unknown Level 3', icon: <Looks3Icon fontSize="small" /> },
+    { value: 'level4', label: 'Unknown Level 4', icon: <Looks4Icon fontSize="small" /> },
+    { value: 'known', label: 'Known', icon: <CheckIcon fontSize="small" /> }
 ];
 
 const WordStatusPopup = ({ word, data, onChangeStatus, onClose }) => {
