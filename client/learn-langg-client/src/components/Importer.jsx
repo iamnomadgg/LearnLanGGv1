@@ -33,9 +33,11 @@ const Importer = () => {
         e.preventDefault();
         setError(null);
         try {
-            await api.post('/lesson', formData);
-            navigate('/lib');
-        } catch (error) {
+            const response = await api.post('/lesson', formData);
+            if (response.status === 201) navigate(`/read/${response.data.lesson._id}`)
+            else navigate('/lib')
+        }
+        catch (error) {
             setError(`'Error creating lesson: ${error}`);
         }
     };
