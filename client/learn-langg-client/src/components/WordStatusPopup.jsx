@@ -14,7 +14,6 @@ import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import Looks3Icon from '@mui/icons-material/Looks3';
 import Looks4Icon from '@mui/icons-material/Looks4';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 const STATUS_OPTIONS = [
     { value: 'discarded', label: 'Discarded', icon: <DeleteIcon fontSize="small" /> },

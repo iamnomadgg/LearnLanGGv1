@@ -12,7 +12,7 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import api from '../api';
-import ClickableWord from './ClickableWord';
+import Word from './Word';
 import WordStatusPopup from './WordStatusPopup';
 
 const Reader = () => {
@@ -120,7 +120,7 @@ const Reader = () => {
             <Typography variant="body1" sx={{ mt: 2 }}>
                 {lesson.content.split(/\s+/).map((word, index) => (
                     <React.Fragment key={index}>
-                        <ClickableWord
+                        <Word
                             word={word}
                             onClick={(e) => handleWordClick(e, word, index)}
                             selected={index === selectedIndex}
