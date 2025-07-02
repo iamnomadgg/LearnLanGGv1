@@ -56,7 +56,7 @@ const EditLesson = () => {
         setSaving(true);
         try {
             await api.put(`/lessons/${lessonId}`, formData);
-            navigate(`/reader/${lessonId}`);
+            navigate(`/read/${lessonId}`);
         } catch (err) {
             setError('Failed to update lesson');
         } finally {
@@ -67,7 +67,7 @@ const EditLesson = () => {
     const handleDelete = async () => {
         try {
             await api.delete(`/lessons/${lessonId}`);
-            navigate('/');
+            navigate('/lib');
         } catch (err) {
             alert('Failed to delete lesson');
         }
@@ -111,7 +111,7 @@ const EditLesson = () => {
                 />
                 <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
                     <Button variant="contained" color="primary" type="submit" disabled={saving}>
-                        Save Changes
+                        Save
                     </Button>
                     <Button
                         variant="outlined"

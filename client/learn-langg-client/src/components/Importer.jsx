@@ -10,9 +10,9 @@ import {
 } from '@mui/material';
 import api from '../api';
 
-const maxTitleLength = parseInt(import.meta.env.VITE_MAX_LESSON_TITLE_LENGTH || 60);
+const maxTitleLength = parseInt(import.meta.env.VITE_MAX_TITLE_LENGTH);
 
-const LessonForm = () => {
+const Importer = () => {
     const [formData, setFormData] = useState({
         title: '',
         content: '',
@@ -34,7 +34,7 @@ const LessonForm = () => {
         setError(null);
         try {
             await api.post('/lessons', formData);
-            navigate('/');
+            navigate('/lib');
         } catch (error) {
             setError(`'Error creating lesson: ${error}`);
         }
@@ -82,11 +82,11 @@ const LessonForm = () => {
                     margin="normal"
                 />
                 <Button variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
-                    Save Lesson
+                    Save
                 </Button>
             </Box>
         </Paper>
     );
 };
 
-export default LessonForm;
+export default Importer;

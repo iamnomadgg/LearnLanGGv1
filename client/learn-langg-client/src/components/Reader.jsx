@@ -102,14 +102,14 @@ const Reader = () => {
                 <Button
                     variant="outlined"
                     startIcon={<ArrowBackIcon />}
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('/lib')}
                 >
                     Back to Lessons
                 </Button>
                 <Button
                     variant="contained"
                     startIcon={<EditIcon />}
-                    onClick={() => navigate(`/editor/${lessonId}`)}
+                    onClick={() => navigate(`/edit/${lessonId}`)}
                 >
                     Edit
                 </Button>

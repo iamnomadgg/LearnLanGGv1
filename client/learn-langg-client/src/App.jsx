@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Library from './components/Library';
-import LessonForm from './components/LessonForm';
+import Importer from './components/Importer';
 import Reader from './components/Reader';
 import Editor from './components/Editor';
 import { Button, Container, Typography } from '@mui/material';
@@ -14,16 +14,16 @@ function App() {
           LearnLangg
         </Typography>
 
-        <Button variant="contained" component={Link} to="/add" sx={{ mb: 3 }}>
+        <Button variant="contained" component={Link} to="/import" sx={{ mb: 3 }}>
           Add New Lesson
         </Button>
 
         <Routes>
           <Route path="/" element={<Library />} />
-          <Route path="/library" element={<Library />} />
-          <Route path="/add" element={<LessonForm />} />
-          <Route path="/editor/:lessonId" element={<Editor />} />
-          <Route path="/reader/:lessonId" element={<Reader />} />
+          <Route path="/lib" element={<Library />} />
+          <Route path="/import" element={<Importer />} />
+          <Route path="/edit/:lessonId" element={<Editor />} />
+          <Route path="/read/:lessonId" element={<Reader />} />
         </Routes>
       </Container>
     </Router>
