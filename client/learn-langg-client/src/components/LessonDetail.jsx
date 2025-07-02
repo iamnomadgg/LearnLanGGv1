@@ -30,7 +30,6 @@ const LessonDetail = () => {
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [selectedWord, setSelectedWord] = useState(null);
     const [selectedWordData, setSelectedWordData] = useState(null);
-    const [selectedWordStatus, setSelectedWordStatus] = useState(null);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
     const containerRef = useRef(null);
     const popupRef = useRef(null);
@@ -94,10 +93,8 @@ const LessonDetail = () => {
         try {
             const res = await api.get(`/vocabulary/${word.toLowerCase()}`);
             setSelectedWordData(res.data);
-            setSelectedWordStatus(res.data.status)
         } catch (err) {
             setSelectedWordData(null);
-            setSelectedWordStatus(null)
             if (err.response?.status === 404) {
                 console.error('Word Not Found', err);
             } else {
@@ -107,13 +104,13 @@ const LessonDetail = () => {
     };
 
     const handleChangeStatus = (newStatus) => {
-        setSelectedWordStatus(newStatus);
+        console.log(`new status: ${newStatus}`)
         // TODO: Save to DB or update local vocab tracking state
     };
 
     const handleClosePopup = () => {
         setSelectedIndex(null);
-        setSelectedWordStatus(null);
+        setSelectedWordData(null);
     };
 
     return (
