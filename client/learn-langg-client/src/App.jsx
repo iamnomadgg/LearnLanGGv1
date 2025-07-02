@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import LessonList from './components/LessonList';
 import LessonForm from './components/LessonForm';
-import LessonDetail from './components/LessonDetail';
+import Reader from './components/Reader';
 import EditLesson from './components/EditLesson';
 import { Button, Container, Typography } from '@mui/material';
 
@@ -22,7 +22,7 @@ function App() {
           <Route path="/" element={<LessonList />} />
           <Route path="/add" element={<LessonForm />} />
           <Route path="/lessons/:id/edit" element={<EditLesson />} />
-          <Route path="/lessons/:id" element={<LessonDetail />} />
+          <Route path="/reader/:lessonId" element={<Reader />} />
         </Routes>
       </Container>
     </Router>

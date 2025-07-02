@@ -15,8 +15,8 @@ import api from '../api';
 import ClickableWord from './ClickableWord';
 import WordStatusPopup from './WordStatusPopup';
 
-const LessonDetail = () => {
-    const { id } = useParams();
+const Reader = () => {
+    const { lessonId } = useParams();
     const navigate = useNavigate();
     const [lesson, setLesson] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -46,7 +46,7 @@ const LessonDetail = () => {
     useEffect(() => {
         const fetchLesson = async () => {
             try {
-                const response = await api.get(`/lessons/${id}`);
+                const response = await api.get(`/lessons/${lessonId}`);
                 setLesson(response.data);
             } catch (err) {
                 setError('Failed to load lesson.');
@@ -56,7 +56,7 @@ const LessonDetail = () => {
         };
 
         fetchLesson();
-    }, [id]);
+    }, [lessonId]);
 
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
@@ -109,7 +109,7 @@ const LessonDetail = () => {
                 <Button
                     variant="contained"
                     startIcon={<EditIcon />}
-                    onClick={() => navigate(`/lessons/${id}/edit`)}
+                    onClick={() => navigate(`/lessons/${lessonId}/edit`)}
                 >
                     Edit
                 </Button>
@@ -160,4 +160,4 @@ const LessonDetail = () => {
     );
 };
 
-export default LessonDetail;
+export default Reader;

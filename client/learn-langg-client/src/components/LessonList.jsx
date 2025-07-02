@@ -34,7 +34,7 @@ const LessonList = () => {
                 {lessons.map((lesson) => (
                     <Grid size={{ xs: 12, sm: 6, md: 4 }} key={lesson._id}>
                         <Card sx={{ height: '100%' }}>
-                            <CardActionArea component={Link} to={`/lessons/${lesson._id}`}>
+                            <CardActionArea component={Link} to={`/reader/${lesson._id}`}>
                                 <CardContent>
                                     <Typography variant="h6">{lesson.title}</Typography>
                                 </CardContent>
